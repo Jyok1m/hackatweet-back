@@ -69,5 +69,34 @@ router.post("/signup", function (req, res) {
   });
 });
 
+//! Signin existing user:
+router.post("/signin", function (req, res) {
+  // Declare the variables:
+  const { username, password } = req.body;
+
+  // Check if the fields are empty or null:
+  if (!checkBody([username, password])) {
+    res.json({ result: false, error: "Missing or empty fields." });
+    return;
+  }
+
+  // Check if the user is already in the database:
+  Users.findOne({ username }).then((data) => {
+    if (!data) {
+      res.json({
+        result: false,
+        error: "User not found. Please signup.",
+      });
+    } else {
+      // Check if the password matches:
+      if (bcrypt.compareSync(password, data.password)) {
+        res.json({ result: true, token: data.token });
+      } else {
+        res.json({ result: false, error: "Invalid password. Please retry." });
+      }
+    }
+  });
+});
+
 // Route export:
 module.exports = router;
