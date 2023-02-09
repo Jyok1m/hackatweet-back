@@ -40,11 +40,11 @@ router.post("/signup", function (req, res) {
       result: false,
       error: `Please retry. Your password must contain one of the following:
       
-      The password must contain at least 1 lowercase alphabetical character
-      The password must contain at least 1 uppercase alphabetical character
-  	  The password must contain at least 1 numeric character
-      The password must contain at least one special character
-  	  The password must be eight characters or longer`,
+      - The password must contain at least 1 lowercase alphabetical character
+      - The password must contain at least 1 uppercase alphabetical character
+      - The password must contain at least 1 numeric character
+      - The password must contain at least one special character
+      - The password must be eight characters or longer`,
     });
     return;
   }
