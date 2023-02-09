@@ -26,7 +26,7 @@ router.post("/signup", function (req, res) {
 
   // Check if the fields are empty or null:
   if (!checkBody([firstname, username, password])) {
-    res.json({ result: false, error: "Missing or empty fields" });
+    res.json({ result: false, error: "Missing or empty fields." });
     return;
   }
 
@@ -54,7 +54,7 @@ router.post("/signup", function (req, res) {
     if (data) {
       res.json({
         result: false,
-        error: "User already in the database. Please login.",
+        error: "User already in the database. Please sign-in.",
       });
     } else {
       // If all the tests have been validated, hash the password:
