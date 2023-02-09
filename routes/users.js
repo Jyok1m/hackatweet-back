@@ -12,10 +12,11 @@ const { checkBody } = require("../modules/checkBody");
 const uid2 = require("uid2"); //? For token generation
 const bcrypt = require("bcrypt"); //? For password hashing
 
-//! Get the list of all users:
-router.get("/", function (req, res) {
-  Users.find().then((data) => {
-    res.json({ result: true, allUsers: data });
+//! Get a specific user:
+router.get("/:token", function (req, res) {
+  const { token } = req.params;
+  Users.findOne({ token }).then((data) => {
+    res.json({ result: true, user: data });
   });
 });
 
