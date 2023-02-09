@@ -1,5 +1,6 @@
 // Import mongoose:
 const mongoose = require("mongoose");
+mongoose.set("strictQuery", false);
 
 // Linker avec la variable environnement:
 const connectionString = process.env.DB_CONNECTION_STRING;

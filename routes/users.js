@@ -12,43 +12,61 @@ const { checkBody } = require("../modules/checkBody");
 const uid2 = require("uid2"); //? For token generation
 const bcrypt = require("bcrypt"); //? For password hashing
 
-//! Add a new user:
-router.post("/add", function (req, res) {
-  //? Declare the variables:
-  const { firstName, lastName, email, password } = req.body;
+//! Signup new user:
+router.post("/signup", function (req, res) {
+  // Declare the variables:
+  const { firstname, username, password } = req.body;
 
-  //? Check if the fields are empty:
-  if (!checkBody([firstName, lastName, email, password])) {
+  // Check if the fields are empty or null:
+  if (!checkBody([firstname, username, password])) {
     res.json({ result: false, error: "Missing or empty fields" });
     return;
-  } else {
-    res.json({ result: true });
   }
 
-  // TODO: Check if the user is already in the database:
+  // Determine password REGEX:
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
   /*
+  	The password must contain at least 1 lowercase alphabetical character
+    The password must contain at least 1 uppercase alphabetical character
+  	The password must contain at least 1 numeric character
+    The password must contain at least one special character
+  	The password must be eight characters or longer
+  */
 
-    User.findOne({ username: req.body.username }).then(data => {
-    if (data === null) {
-      const hash = bcrypt.hashSync(req.body.password, 10);
+  // Check if the password matches with the REGEX:
+  if (!passwordRegex.test(password)) {
+    res.json({
+      result: false,
+      error: "Please retry. Your password must contain one of the following:",
+    });
+    return;
+  }
 
-      const newUser = new User({
-        username: req.body.username,
-        password: hash,
-        token: uid2(32),
-        canBookmark: true,
-      });
-
-      newUser.save().then(newDoc => {
-        res.json({ result: true, token: newDoc.token });
+  // Check if the user is already in the database:
+  Users.findOne({ username }).then((data) => {
+    if (data) {
+      res.json({
+        result: false,
+        error: "User already in the database. Please login.",
       });
     } else {
-      // User already exists in database
-      res.json({ result: false, error: 'User already exists' });
+      // If all the tests have been validated, hash the password:
+      const hash = bcrypt.hashSync(password, 10);
+
+      // Save the info in the database:
+      const newUser = new Users({
+        firstname,
+        username,
+        password: hash,
+        token: uid2(32),
+      });
+
+      newUser.save().then(() => {
+        res.json({ result: true, token: newUser.token });
+      });
     }
   });
-
-  */
 });
 
 // Route export:
