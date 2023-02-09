@@ -33,19 +33,18 @@ router.post("/signup", function (req, res) {
   // Determine password REGEX:
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
-  /*
-  	The password must contain at least 1 lowercase alphabetical character
-    The password must contain at least 1 uppercase alphabetical character
-  	The password must contain at least 1 numeric character
-    The password must contain at least one special character
-  	The password must be eight characters or longer
-  */
 
   // Check if the password matches with the REGEX:
   if (!passwordRegex.test(password)) {
     res.json({
       result: false,
-      error: "Please retry. Your password must contain one of the following:",
+      error: `Please retry. Your password must contain one of the following:
+      
+      The password must contain at least 1 lowercase alphabetical character
+      The password must contain at least 1 uppercase alphabetical character
+  	  The password must contain at least 1 numeric character
+      The password must contain at least one special character
+  	  The password must be eight characters or longer`,
     });
     return;
   }
