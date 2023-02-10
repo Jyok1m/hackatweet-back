@@ -32,5 +32,11 @@ router.get("/all", (req, res) => {
     .then((data) => res.json({ result: true, tweets: data }));
 });
 
+// Route to delete a tweet from the DB:
+router.delete("/delete/:tweetId", (req, res) => {
+  const { tweetId } = req.params;
+  Tweets.findByIdAndDelete(tweetId).then(() => res.json({ result: true }));
+});
+
 // Route export:
 module.exports = router;
