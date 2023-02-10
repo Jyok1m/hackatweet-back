@@ -6,6 +6,7 @@ const tweetSchema = mongoose.Schema({
   token: String,
   tweet: String,
   timestamp: Number,
+  author: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
 });
 
 // Create the model:

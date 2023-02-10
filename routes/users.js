@@ -70,7 +70,7 @@ router.post("/signup", function (req, res) {
       });
 
       newUser.save().then(() => {
-        res.json({ result: true, token: newUser.token });
+        res.json({ result: true, token: newUser.token, id: newUser._id });
       });
     }
   });
@@ -97,7 +97,7 @@ router.post("/signin", function (req, res) {
     } else {
       // Check if the password matches:
       if (bcrypt.compareSync(password, data.password)) {
-        res.json({ result: true, token: data.token });
+        res.json({ result: true, token: data.token, id: data._id });
       } else {
         res.json({ result: false, error: "Invalid password. Please retry." });
       }
