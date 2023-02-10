@@ -28,7 +28,7 @@ router.post("/send", (req, res) => {
 });
 
 // Route to get all the tweets from the DB:
-router.get("/all", (res) => {
+router.get("/all", (req, res) => {
   Tweets.find({})
     .populate("author")
     .then((data) => res.json({ result: true, tweets: data }));
