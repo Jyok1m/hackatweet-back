@@ -13,6 +13,7 @@ require("./models/connection");
 // Router configs:
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
+var tweetsRouter = require("./routes/tweets");
 
 // Express initialisation:
 var app = express();
@@ -31,5 +32,6 @@ app.use(express.static(path.join(__dirname, "public")));
 // Route extensions:
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/tweets", tweetsRouter);
 
 module.exports = app;
