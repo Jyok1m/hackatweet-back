@@ -31,7 +31,7 @@ router.post("/send", (req, res) => {
 router.get("/all", (res) => {
   Tweets.find({})
     .populate("author")
-    .then((data) => res.json({ resulte: true, tweets: data }));
+    .then((data) => res.json({ result: true, tweets: data }));
 });
 
 // Route export:
