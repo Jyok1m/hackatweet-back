@@ -20,9 +20,7 @@ router.post("/send", (req, res) => {
   }
 
   Users.findOne({ token }).then((data) => {
-    const id = data._id;
-    // Send the infomation to the DB:
-    const newTweet = new Tweets({ tweet, timestamp, author: id });
+    const newTweet = new Tweets({ tweet, timestamp, author: data._id });
     newTweet.save().then(() => res.json({ result: true }));
   });
 });
